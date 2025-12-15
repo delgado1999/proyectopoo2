@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import beans.Administrador;
 import beans.Habitacion;
 import beans.Persona;
 import beans.Registro;
@@ -31,7 +30,6 @@ public class RegistroModel extends Conexion {
             while (rs.next()) {
                 Registro r = new Registro();
                 r.setIdregistro(rs.getInt("idregistro"));
-                r.setNombreA(rs.getString("nombreA"));
                 r.setNumero(rs.getInt("numero"));
                 r.setPiso(rs.getInt("piso"));
                 r.setPersona_nombre(rs.getString("persona_nombre"));
@@ -106,32 +104,7 @@ public class RegistroModel extends Conexion {
 
         return lista;
     }
-    public List<Administrador> listarAdministrador() {
-        List<Administrador> lista = new ArrayList<>();
-
-        try {
-            String sql = "CALL sp_listarAdministrador()";
-            this.abrirConexion();
-            cs = conexion.prepareCall(sql);
-            rs = cs.executeQuery();
-
-            while (rs.next()) {
-            	Administrador r = new Administrador();
-                r.setId(rs.getInt("idadministrador"));
-                r.setNombre(rs.getString("nombre"));
-                lista.add(r);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-
-        } finally {
-            this.cerrarConexion();
-        }
-
-        return lista;
-    }
+   
     
     public Registro obtenerRegistro(int idregistro) {
         Registro r = null;
@@ -146,7 +119,6 @@ public class RegistroModel extends Conexion {
             if (rs.next()) {
                 r = new Registro();
                 r.setIdregistro(rs.getInt("idregistro"));
-                r.setIdadministrador(rs.getInt("idadministrador"));
                 r.setIdhabitacion(rs.getInt("idhabitacion"));
                 r.setIdpersona(rs.getInt("idpersona"));
                 r.setIdtipo_persona(rs.getInt("idtipo_persona"));
@@ -171,17 +143,15 @@ public class RegistroModel extends Conexion {
         int filas = 0;
 
         try {
-            String sql = "CALL sp_insertarRegistro(?,?,?,?,?,?,?)";
+            String sql = "CALL sp_insertarRegistro(?,?,?,?,?,?)";
             this.abrirConexion();
             cs = conexion.prepareCall(sql);
-
-            cs.setInt(1, registro.getIdadministrador());
-            cs.setInt(2, registro.getIdhabitacion());
-            cs.setInt(3, registro.getIdpersona());
-            cs.setInt(4, registro.getIdtipo_persona());
-            cs.setDate(5, registro.getFechaInicio());
-            cs.setDate(6, registro.getFechaFin());
-            cs.setString(7, registro.getEstado());
+            cs.setInt(1, registro.getIdhabitacion());
+            cs.setInt(2, registro.getIdpersona());
+            cs.setInt(3, registro.getIdtipo_persona());
+            cs.setDate(4, registro.getFechaInicio());
+            cs.setDate(5, registro.getFechaFin());
+            cs.setString(6, registro.getEstado());
 
             filas = cs.executeUpdate();
 
@@ -201,18 +171,17 @@ public class RegistroModel extends Conexion {
         int filas = 0;
 
         try {
-            String sql = "CALL sp_modificarRegistro(?,?,?,?,?,?,?,?)";
+            String sql = "CALL sp_modificarRegistro(?,?,?,?,?,?,?)";
             this.abrirConexion();
             cs = conexion.prepareCall(sql);
 
             cs.setInt(1, registro.getIdregistro());
-            cs.setInt(2, registro.getIdadministrador());
-            cs.setInt(3, registro.getIdhabitacion());
-            cs.setInt(4, registro.getIdpersona());
-            cs.setInt(5, registro.getIdtipo_persona());
-            cs.setDate(6, registro.getFechaInicio());
-            cs.setDate(7, registro.getFechaFin());
-            cs.setString(8, registro.getEstado());
+            cs.setInt(2, registro.getIdhabitacion());
+            cs.setInt(3, registro.getIdpersona());
+            cs.setInt(4, registro.getIdtipo_persona());
+            cs.setDate(5, registro.getFechaInicio());
+            cs.setDate(6, registro.getFechaFin());
+            cs.setString(7, registro.getEstado());
 
             filas = cs.executeUpdate();
 

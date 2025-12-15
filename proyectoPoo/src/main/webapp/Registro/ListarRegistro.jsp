@@ -123,11 +123,10 @@
     <thead>
         <tr>
             <th>ID</th>
-            <th>Administrador</th>
+             <th>Persona</th>
+            <th>Tipo Persona</th>
             <th>Número</th>
             <th>Piso</th>
-            <th>Persona</th>
-            <th>Tipo Persona</th>
             <th>Fecha Inicio</th>
             <th>Fecha Fin</th>
             <th>Estado</th>
@@ -141,11 +140,10 @@
     %>
         <tr>
             <td><%= r.getIdregistro() %></td>
-            <td><%= r.getNombreA() %></td>
-            <td><%= r.getNumero() %></td>
-            <td><%= r.getPiso() %></td>
             <td><%= r.getPersona_nombre() %></td>
             <td><%= r.getTipo_persona() %></td>
+            <td><%= r.getNumero() %></td>
+            <td><%= r.getPiso() %></td>
             <td><%= r.getFechaInicio() %></td>
             <td><%= r.getFechaFin() %></td>
             <td><%= r.getEstado() %></td>

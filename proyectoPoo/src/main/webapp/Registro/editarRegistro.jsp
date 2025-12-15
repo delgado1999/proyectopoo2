@@ -4,7 +4,6 @@
 <%@ page import="beans.Habitacion"%>
 <%@ page import="beans.Persona"%>
 <%@ page import="beans.TipoPersona"%>
-<%@ page import="beans.Administrador"%>
 <%@ page import="beans.Registro"%>
 
 <!DOCTYPE html>
@@ -85,7 +84,6 @@ body {
 
         <%
             Registro r = (Registro) request.getAttribute("registro");
-            List<Administrador> listaA = (List<Administrador>) request.getAttribute("listarAdministrador");
             List<Persona> listaP = (List<Persona>) request.getAttribute("listarPersona");
             List<TipoPersona> listaTP = (List<TipoPersona>) request.getAttribute("listarTipoPersona");
             List<Habitacion> listaH = (List<Habitacion>) request.getAttribute("listarHabitacion");
@@ -94,18 +92,6 @@ body {
         <form action="RegistroController" method="post">
             <input type="hidden" name="op" value="modificar">
             <input type="hidden" name="idregistro" value="<%= r.getIdregistro() %>">
-
-            <!-- ADMINISTRADOR -->
-            <label>Administrador</label>
-            <select class="form-control mb-2" name="idadministrador" required>
-                <option value="">Seleccione...</option>
-                <% for (Administrador a : listaA) { %>
-                    <option value="<%= a.getId() %>"
-                        <%= (a.getId() == r.getIdadministrador()) ? "selected" : "" %>>
-                        <%= a.getNombre() %>
-                    </option>
-                <% } %>
-            </select>
 
             <!-- PERSONA -->
             <label>Persona</label>

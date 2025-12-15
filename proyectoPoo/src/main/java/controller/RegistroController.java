@@ -46,7 +46,6 @@ public class RegistroController extends HttpServlet {
 
             case "nuevo":
             	request.setAttribute("listarHabitacion", modelo.listarHabitacion());
-            	request.setAttribute("listarAdministrador", modelo.listarAdministrador());
             	request.setAttribute("listarTipoPersona", modelo.listarTipoPersona());
             	request.setAttribute("listarPersona", modelo.listarPersona());
                 request.getRequestDispatcher("/Registro/nuevoRegistro.jsp").forward(request, response);
@@ -58,7 +57,6 @@ public class RegistroController extends HttpServlet {
 
             case "obtener":
             	request.setAttribute("listarHabitacion", modelo.listarHabitacion());
-            	request.setAttribute("listarAdministrador", modelo.listarAdministrador());
             	request.setAttribute("listarTipoPersona", modelo.listarTipoPersona());
             	request.setAttribute("listarPersona", modelo.listarPersona());
                 obtener(request, response);
@@ -104,7 +102,6 @@ public class RegistroController extends HttpServlet {
         try {
             Registro reg = new Registro();
 
-            reg.setIdadministrador(Integer.parseInt(request.getParameter("idadministrador")));
             reg.setIdhabitacion(Integer.parseInt(request.getParameter("idhabitacion")));
             reg.setIdpersona(Integer.parseInt(request.getParameter("idpersona")));
             reg.setIdtipo_persona(Integer.parseInt(request.getParameter("idtipo_persona")));
@@ -144,7 +141,6 @@ public class RegistroController extends HttpServlet {
             Registro reg = new Registro();
 
             reg.setIdregistro(Integer.parseInt(request.getParameter("idregistro")));
-            reg.setIdadministrador(Integer.parseInt(request.getParameter("idadministrador")));
             reg.setIdhabitacion(Integer.parseInt(request.getParameter("idhabitacion")));
             reg.setIdpersona(Integer.parseInt(request.getParameter("idpersona")));
             reg.setIdtipo_persona(Integer.parseInt(request.getParameter("idtipo_persona")));

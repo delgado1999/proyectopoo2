@@ -4,7 +4,6 @@
 <%@ page import="beans.Habitacion"%>
 <%@ page import="beans.Persona"%>
 <%@ page import="beans.TipoPersona"%>
-<%@ page import="beans.Administrador"%>
 
 <!DOCTYPE html>
 <html>
@@ -101,22 +100,6 @@ to {
 
 		<form action="RegistroController" method="post">
 
-			<input type="hidden" name="op" value="insertar">
-			<!-- ADMINISTRADOR -->
-			<label>Administrador</label> <select class="form-control mb-2"
-				name="idadministrador" required>
-				<option value="">Seleccione...</option>
-				<%
-				List<Administrador> listaA = (List<Administrador>) request.getAttribute("listarAdministrador");
-				if (listaA != null) {
-					for (Administrador a : listaA) {
-				%>
-				<option value="<%=a.getId()%>"><%=a.getNombre()%></option>
-				<%
-				}
-				}
-				%>
-			</select>
 
 			<!-- PERSONA -->
 			<label>Persona</label> <select class="form-control mb-2"

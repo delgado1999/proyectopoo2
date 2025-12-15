@@ -5,14 +5,12 @@ import java.sql.Date;
 public class Registro {
 
     private int idregistro;
-    private int idadministrador;
     private int idhabitacion;
     private int idpersona;
     private int idtipo_persona;
     private Date fechaInicio;
     private Date fechaFin;
     private String estado;
-    private String nombreA;
     private int numero;
     private int piso;
     private String persona_nombre;
@@ -27,13 +25,6 @@ public class Registro {
         this.idregistro = idregistro;
     }
 
-    public int getIdadministrador() {
-        return idadministrador;
-    }
-
-    public void setIdadministrador(int idadministrador) {
-        this.idadministrador = idadministrador;
-    }
 
     public int getIdhabitacion() {
         return idhabitacion;
@@ -87,13 +78,6 @@ public class Registro {
     
 	
 
-	public String getNombreA() {
-		return nombreA;
-	}
-
-	public void setNombreA(String nombreA) {
-		this.nombreA = nombreA;
-	}
 
 	public String getPersona_nombre() {
 		return persona_nombre;
