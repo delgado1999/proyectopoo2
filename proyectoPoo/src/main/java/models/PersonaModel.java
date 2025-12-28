@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import beans.Persona;
+import beans.TipoPersona;
 import util.Conexion;
 
 public class PersonaModel extends Conexion {
@@ -36,6 +37,30 @@ public class PersonaModel extends Conexion {
 			}
 			this.cerrarConexion();
 			return personas;
+		}
+
+		catch (Exception e) {
+			// TODO: handle exception
+			this.cerrarConexion();
+			return null;
+		}
+
+	}
+	public List<TipoPersona> listarTipoPersona() {
+		try {
+			ArrayList<TipoPersona> tipopersonas = new ArrayList<TipoPersona>();
+			String sql = "CALL sp_listarTipoPersona()";
+			this.abrirConexion();
+			cs = conexion.prepareCall(sql);
+			rs = cs.executeQuery();
+			while (rs.next()) {
+				TipoPersona tipopersona = new TipoPersona();
+				tipopersona.setId(rs.getInt("idtipo_persona"));			
+				tipopersona.setNombre(rs.getString("nombre"));
+				tipopersonas.add(tipopersona);
+			}
+			this.cerrarConexion();
+			return tipopersonas;
 		}
 
 		catch (Exception e) {

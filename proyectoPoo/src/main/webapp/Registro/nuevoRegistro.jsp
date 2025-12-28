@@ -15,6 +15,30 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 
 <style>
+/* ===== BLOQUES POR PISO ===== */
+.bloque-piso {
+	width: 100%;
+	background: #f4f6f9;
+	border-radius: 14px;
+	padding: 15px;
+	margin-bottom: 25px;
+}
+
+.titulo-piso {
+	font-weight: bold;
+	margin-bottom: 15px;
+	padding-left: 10px;
+	border-left: 5px solid #5c4de2;
+	color: #5c4de2;
+}
+
+/* GRID DENTRO DE CADA PISO */
+.habitaciones-grid {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
 body {
 	font-family: "Poppins", sans-serif;
 	background: linear-gradient(135deg, #d7ecff, #e8d9ff);
@@ -98,19 +122,23 @@ to {
 
 		<h2 class="mb-3">Nuevo Registro</h2>
 
-		<form action="RegistroController" method="post">
+		<form id="formRegistro" action="RegistroController?op=insertar"
+			method="post">
+
 
 
 			<!-- PERSONA -->
 			<label>Persona</label> <select class="form-control mb-2"
-				name="idpersona" required>
+				name="idpersona" id="personaSelect" required>
 				<option value="">Seleccione...</option>
 				<%
 				List<Persona> listaP = (List<Persona>) request.getAttribute("listarPersona");
 				if (listaP != null) {
 					for (Persona p : listaP) {
 				%>
-				<option value="<%=p.getIdpersona()%>"><%=p.getNombres()%>
+				<option value="<%=p.getIdpersona()%>"
+					data-idtipo="<%=p.getIdtipo()%>">
+					<%=p.getNombres()%>
 				</option>
 				<%
 				}
@@ -118,9 +146,10 @@ to {
 				%>
 			</select>
 
+
 			<!-- TIPO PERSONA -->
 			<label>Tipo Persona</label> <select class="form-control mb-2"
-				name="idtipo_persona" required>
+				name="idtipo_persona" id="tipoPersonaSelect" required>
 				<option value="">Seleccione...</option>
 				<%
 				List<TipoPersona> listaTP = (List<TipoPersona>) request.getAttribute("listarTipoPersona");
@@ -145,8 +174,8 @@ to {
 
 			<label>Estado</label> <select class="form-control mb-3" name="estado"
 				required>
-				<option value="ACTIVO">Activo</option>
-				<option value="INACTIVO">Inactivo</option>
+				<option value="activo">Activo</option>
+				<option value="inactivo">Inactivo</option>
 			</select>
 
 			<button class="btn btn-primary w-100" type="submit">Guardar
@@ -155,51 +184,80 @@ to {
 
 	</div>
 
-
-
 	<!-- ========== MODAL HABITACIONES ========== -->
-	<div class="modal fade" id="modalHabitaciones" tabindex="-1">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
+<div class="modal fade" id="modalHabitaciones" tabindex="-1">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
 
-				<div class="modal-header">
-					<h5 class="modal-title">Seleccionar Habitación</h5>
-					<button class="btn-close" data-bs-dismiss="modal"></button>
-				</div>
+      <div class="modal-header">
+        <h5 class="modal-title">Seleccionar Habitación</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
 
-				<div class="modal-body d-flex flex-wrap justify-content-center">
+      <div class="modal-body">
 
-					<%
-					List<Habitacion> listaH = (List<Habitacion>) request.getAttribute("listarHabitacion");
-					if (listaH != null) {
-						for (Habitacion h : listaH) {
-							String color = h.getEstado().equalsIgnoreCase("ACTIVO") ? "#41d151" : "#ff4e4e";
-					%>
+        <%
+          List<Habitacion> listaH = (List<Habitacion>) request.getAttribute("listarHabitacion");
+          int pisoActual = -1;
 
-					<div class="card-habitacion" id="hab-<%=h.getId()%>"
-						onclick="seleccionarHabitacion(<%=h.getId()%>)">
+          if (listaH != null) {
+            for (Habitacion h : listaH) {
 
-						<div class="estado-dot" style="background:<%=color%>;"></div>
+              if (h.getnPiso() != pisoActual) {
 
-						<h4>
-							Hab.
-							<%=h.getnHabitacion()%></h4>
-						<p>
-							Piso
-							<%=h.getnPiso()%></p>
-						<p><%=h.getEstado()%></p>
-					</div>
+                if (pisoActual != -1) {
+        %>
+                  </div> <!-- habitaciones-grid -->
+                </div> <!-- bloque-piso -->
+        <%
+                }
 
-					<%
-					}
-					}
-					%>
+                pisoActual = h.getnPiso();
+        %>
 
-				</div>
+        <!-- ===== BLOQUE POR PISO ===== -->
+        <div class="bloque-piso">
+          <h4 class="titulo-piso">Piso <%= pisoActual %></h4>
 
-			</div>
-		</div>
-	</div>
+          <div class="habitaciones-grid">
+        <%
+              }
+
+              String color = h.getEstado().equalsIgnoreCase("ACTIVO")
+                             ? "#41d151"
+                             : "#ff4e4e";
+        %>
+
+            <!-- ===== CARD HABITACION ===== -->
+            <div class="card-habitacion"
+                 id="hab-<%=h.getId()%>"
+                 onclick="seleccionarHabitacion(<%=h.getId()%>)">
+
+              <div class="estado-dot" style="background:<%=color%>;"></div>
+
+              <h4>Hab. <%=h.getnHabitacion()%></h4>
+              <p><%=h.getEstado()%></p>
+            </div>
+
+        <%
+            }
+          }
+
+          if (pisoActual != -1) {
+        %>
+          </div> <!-- habitaciones-grid -->
+        </div> <!-- bloque-piso -->
+        <%
+          }
+        %>
+
+      </div> <!-- modal-body -->
+
+    </div>
+  </div>
+</div>
+	
+
 
 	<script>
 function seleccionarHabitacion(idHab) {
@@ -213,6 +271,23 @@ function seleccionarHabitacion(idHab) {
     bootstrap.Modal.getInstance(document.getElementById("modalHabitaciones")).hide();
 }
 </script>
+	<script>
+document.getElementById("personaSelect").addEventListener("change", function () {
+
+    let option = this.options[this.selectedIndex];
+    let idTipo = option.getAttribute("data-idtipo");
+
+    let tipoSelect = document.getElementById("tipoPersonaSelect");
+
+    if (idTipo && idTipo !== "0") {
+        tipoSelect.value = idTipo;
+    } else {
+        tipoSelect.value = "";
+    }
+});
+</script>
+
+
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

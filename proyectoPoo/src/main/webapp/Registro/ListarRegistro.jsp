@@ -105,7 +105,7 @@
 
 <h2>📝 Listado de Registro</h2>
 
-<a class="btn-new" href="RegistroController?op=nuevo">➕ Nuevo Registro</a>
+<a class="btn-new" href="RegistroController?op=nuevo">➕ Nuevo</a>
 
 <%
     List<Registro> lista = (List<Registro>) request.getAttribute("listarRegistro");
@@ -125,7 +125,7 @@
             <th>ID</th>
              <th>Persona</th>
             <th>Tipo Persona</th>
-            <th>Número</th>
+            <th>Número Habitación</th>
             <th>Piso</th>
             <th>Fecha Inicio</th>
             <th>Fecha Fin</th>

@@ -122,6 +122,7 @@ public class RegistroController extends HttpServlet {
         }
     }
 
+
     // OBTENER UN REGISTRO
     private void obtener(HttpServletRequest request, HttpServletResponse response) {
         try {
@@ -180,23 +181,26 @@ public class RegistroController extends HttpServlet {
     }
     private void reporte(HttpServletRequest request, HttpServletResponse response) {
         try {
-            // Detectar si es una petición AJAX verificando el header Accept
+            // Detectar si es una petición AJAX
             String acceptHeader = request.getHeader("Accept");
             boolean esAjax = acceptHeader != null && acceptHeader.contains("application/json");
 
             if (esAjax) {
-                // CASO 1: Petición AJAX - devolver JSON con los datos
-                List<RegistroActivoDTO> datos = modelo.obtenerRegistrosActivos();
+                // 🔹 Obtener el DTO (una sola fila)
+                RegistroActivoDTO dto = modelo.obtenerRegistrosActivos();
 
                 List<String> labels = new ArrayList<>();
                 List<Integer> values = new ArrayList<>();
 
-                for (RegistroActivoDTO d : datos) {
-                    labels.add("Activos"); // único label
-                    values.add(d.getTotalActivos()); // único valor
-                }
+                // Labels
+                labels.add("Activos");
+                labels.add("Inactivos");
 
-                // Construir el objeto data como JSON
+                // Values
+                values.add(dto.getTotalActivos());
+                values.add(dto.getTotalInactivos());
+
+                // Construir JSON
                 String dataJson = new StringBuilder(128)
                     .append("{")
                     .append("\"labels\":")
@@ -207,19 +211,19 @@ public class RegistroController extends HttpServlet {
                     .append("}")
                     .toString();
 
-                // Enviar respuesta JSON
+                // Respuesta JSON
                 enviarJSON(response, true, "OK", dataJson);
 
             } else {
-                // CASO 2: Petición directa desde navegador - mostrar JSP
+                // 🔹 Petición normal → JSP
                 response.setContentType("text/html; charset=UTF-8");
-                request.getRequestDispatcher("/Registro/reporte.jsp").forward(request, response);
+                request.getRequestDispatcher("/Registro/reporte.jsp")
+                       .forward(request, response);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
 
-            // Manejar error según el tipo de petición
             String acceptHeader = request.getHeader("Accept");
             boolean esAjax = acceptHeader != null && acceptHeader.contains("application/json");
 
@@ -235,6 +239,7 @@ public class RegistroController extends HttpServlet {
             }
         }
     }
+
 
     /**
 	 * Envía una respuesta JSON con datos adicionales

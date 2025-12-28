@@ -86,7 +86,7 @@
 
 <h2>Listado de Habitaciones</h2>
 
-<a class="btn-new" href="${pageContext.request.contextPath}/HabitacionController?op=nuevo">➕ Nueva Habitación</a>
+<a class="btn-new" href="${pageContext.request.contextPath}/HabitacionController?op=nuevo">Nuevo</a>
 
 <table>
     <tr>

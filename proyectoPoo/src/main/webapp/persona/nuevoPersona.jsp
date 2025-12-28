@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java"%>
+<%@ page import="java.util.List"%>
+<%@ page import="beans.TipoPersona"%>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -35,12 +37,20 @@
         </div>
 
         <div class="mb-3">
-            <label for="idtipo" class="form-label">Tipo:</label>
-            <select name="idtipo" id="idtipo" class="form-select">
-                <option value="1">Cliente</option>
-                <option value="2">Empleado</option>
-                <!-- Agrega los tipos según tu base de datos -->
-            </select>
+            <label>Tipo Persona</label> <select class="form-control mb-2"
+				name="idtipo" required>
+				<option value="">Seleccione...</option>
+				<%
+				List<TipoPersona> listaTP = (List<TipoPersona>) request.getAttribute("listarTipoPersona");
+				if (listaTP != null) {
+					for (TipoPersona tp : listaTP) {
+				%>
+				<option value="<%=tp.getId()%>"><%=tp.getNombre()%></option>
+				<%
+				}
+				}
+				%>
+			</select> 
         </div>
 
         <div class="mb-3">

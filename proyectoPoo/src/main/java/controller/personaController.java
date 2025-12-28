@@ -41,12 +41,14 @@ public class personaController extends HttpServlet {
                     listar(request, response);
                     break;
                 case "nuevo":
+                	request.setAttribute("listarTipoPersona", modelo.listarTipoPersona());
                     request.getRequestDispatcher("/persona/nuevoPersona.jsp").forward(request, response);
                     break;
                 case "insertar":
                     insertar(request, response);
                     break;
                 case "obtener":
+                	request.setAttribute("listarTipoPersona", modelo.listarTipoPersona());
                     obtener(request, response);
                     break;
                 case "modificar":

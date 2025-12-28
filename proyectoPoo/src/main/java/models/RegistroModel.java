@@ -64,6 +64,7 @@ public class RegistroModel extends Conexion {
                 Persona r = new Persona();
                 r.setIdpersona(rs.getInt("idpersona"));
                 r.setNombres(rs.getString("nombres"));
+                r.setIdtipo(rs.getInt("idtipo")); 
                 lista.add(r);
             }
 
@@ -152,6 +153,7 @@ public class RegistroModel extends Conexion {
             cs.setDate(4, registro.getFechaInicio());
             cs.setDate(5, registro.getFechaFin());
             cs.setString(6, registro.getEstado());
+           
 
             filas = cs.executeUpdate();
 
@@ -245,23 +247,24 @@ public class RegistroModel extends Conexion {
 
         return filas;
     }
-    public List<RegistroActivoDTO> obtenerRegistrosActivos() {
+    public RegistroActivoDTO obtenerRegistrosActivos() {
         try {
-            ArrayList<RegistroActivoDTO> lista = new ArrayList<>();
+            RegistroActivoDTO dto = null;
 
             String sql = "CALL sp_ContarRegistrosActivos()";
             this.abrirConexion();
             cs = conexion.prepareCall(sql);
             rs = cs.executeQuery();
 
-            while (rs.next()) {
-                lista.add(new RegistroActivoDTO(
-                    rs.getInt("total_activos")
-                ));
+            if (rs.next()) {
+                dto = new RegistroActivoDTO(
+                    rs.getInt("total_activos"),
+                    rs.getInt("total_inactivos")
+                );
             }
 
             this.cerrarConexion();
-            return lista;
+            return dto;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -269,6 +272,7 @@ public class RegistroModel extends Conexion {
             return null;
         }
     }
+
 
 }
 

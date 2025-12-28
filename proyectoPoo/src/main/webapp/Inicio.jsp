@@ -132,7 +132,7 @@
         </div>
 
         <!-- Reportes -->
-        <div class="card" onclick="window.location='ReporteController?op=reporte'">
+        <div class="card" onclick="window.location='RegistroController?op=reporte'">
 
             <img src="https://cdn-icons-png.flaticon.com/512/1828/1828761.png" class="report-img">
 

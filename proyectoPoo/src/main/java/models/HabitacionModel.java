@@ -75,12 +75,12 @@ public class HabitacionModel extends Conexion{
         int filas = 0;
 
         try {
-            String sql = "CALL sp_InsetarHabitacion(?)";
+            String sql = "CALL sp_InsetarHabitacion(?,?,?)";
             this.abrirConexion();
             cs = conexion.prepareCall(sql);
             cs.setInt(1, habitacion.getnHabitacion());
-            cs.setInt(1, habitacion.getnPiso());
-            cs.setString(1, habitacion.getEstado());
+            cs.setInt(2, habitacion.getnPiso());
+            cs.setString(3, habitacion.getEstado());
             filas = cs.executeUpdate();
 
         } catch (SQLException e) {
@@ -97,7 +97,7 @@ public class HabitacionModel extends Conexion{
         int filas = 0;
 
         try {
-            String sql = "CALL sp_modificarHabitacion(?, ?,?,?)";
+            String sql = "CALL sp_modificarHabitacion(?,?,?,?)";
             this.abrirConexion();
             cs = conexion.prepareCall(sql);
             cs.setInt(1, habitacion.getId());

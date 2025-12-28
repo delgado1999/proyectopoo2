@@ -105,7 +105,7 @@
 String url = "http://localhost:8080/proyectoPoo/";
 %>
 
-<a href="<%=url%>personaController?op=nuevo" class="btn-new">➕ Nueva Persona</a>
+<a href="<%=url%>personaController?op=nuevo" class="btn-new">➕ Nuevo</a>
 
 <h2>👤 Lista de Personas</h2>
 
